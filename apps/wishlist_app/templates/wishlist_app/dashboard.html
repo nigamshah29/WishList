@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Welcome</title>
+</head>
+<body>
+  <a href="{% url 'user:logout' %}" style="float:right">Logout</a>
+  <h1>Hello, {{request.session.name}}!</h1>
+  <h3>Your Wish List:</h3>
+  <table style="border:1px solid black;">
+    <tr>
+      <th style="border:2px solid black; padding:10px 40px">Item</th>
+      <th style="border:2px solid black; padding:10px 40px">Added By</th>
+      <th style="border:2px solid black; padding:10px 40px">Date Added</th>
+      <th style="border:2px solid black; padding:10px 40px">Action</th>
+    </tr>
+    {% for wish in my_wishes %}
+    <tr>
+      <td><a href="{% url 'wishlist:wish_item' item_id=wish.id %}">{{wish.wishitem.product}}</a></td>
+      <td>{{wish.wisher.name}}</td>
+      <td>{{wish.created_at}}</td>
+      <td><a href="{% url 'wishlist:remove_item' item_id=wish.id %}">Remove from my Wishlist</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+  <h3>Other Users' Wish List:</h3>
+  <table style="border:1px solid black;">
+    <tr>
+      <th style="border:2px solid black; padding:10px 40px">Item</th>
+      <th style="border:2px solid black; padding:10px 40px">Added By</th>
+      <th style="border:2px solid black; padding:10px 40px">Date Added</th>
+      <th style="border:2px solid black; padding:10px 40px">Action</th>
+    </tr>
+    {% for item in other_wishes %}
+    <tr>
+      <td><a href="{% url 'wishlist:wish_item' item_id=item.id %}">{{item.wishitem.product}}</a></td>
+      <td>{{item.wisher.name}}</td>
+      <td>{{item.created_at}}</td>
+      <td><a href="{% url 'wishlist:add_to_list' item_id=item.id adder_id=item.wisher_id %}">Add to my Wishlist</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+<br><br>
+<a href="{% url 'wishlist:add_item_page' %}">Add Item</a>
+</body>
+</html>

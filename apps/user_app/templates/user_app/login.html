@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login or Register</title>
+  {% load staticfiles %}
+  {% load static %}
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#datepicker").datepicker();
+    });
+  </script>
+</head>
+<body>
+  <h1>Welcome!</h1>
+  {% for m in messages %}
+  <p>{{m}}</p>
+  {% endfor %}
+<br>
+  <h2>Register</h2>
+  <div class="form"  style="margin:30px; display:inline-block;">
+  <form action="{% url 'user:register' %}" method="post">
+    {% csrf_token %}
+    Name: <input type="text" name="name">
+    <br><br>
+    Username: <input type="text" name="username">
+    <br><br>
+    Password: <input type="password" name="password"><br><br>
+    *Password should be at least 8 characters.
+    <br><br>
+    Confirm Password: <input type="password" name="confirm_password">
+    <br><br>
+    Date of Hire: <input id="datepicker" name="date_of_hire" />
+    <br><br>
+    <input type="submit" name="register" value="Register">
+  </form>
+</div>
+<br><hr><br>
+  <h2>Login</h2>
+  <div class="form" style="margin:30px; display:inline-block;">
+  <form action="{% url 'user:authenticate' %}" method="post">
+    {% csrf_token %}
+    Username: <input type="text" name="username">
+    <br><br>
+    Password: <input type="password" name="password">
+    <br><br>
+    <input type="submit" name="login" value="Login">
+  </form>
+  </div>
+  <br><br>
+
+</body>
+</html>
